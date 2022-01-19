@@ -16,6 +16,7 @@ app:
       realm: master
 
 spring:
+     
   security:
     oauth2:
       client:
@@ -44,6 +45,14 @@ spring:
   cloud:
     # A client sends a request to Spring Cloud Gateway. If the request matches a route through its predicates, the Gateway HandlerMapping will send the request to the Gateway WebHandler, which in turn will run the request through a chain of filters.
     gateway:
+    
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+            - GET
+            - POST 
       # For automatic route discovery through Eureka
       discovery.locator:
         enabled: false
@@ -56,6 +65,18 @@ spring:
             - Path=/userms/**
           filters:
             - RewritePath=/userms/(?<path>.*), /$\{path}
+        - id: patientmsmodule
+          uri: lb://PATIENTMS
+          predicates:
+            - Path=/patientms/**
+          filters:
+            - RewritePath=/patientms/(?<path>.*), /$\{path}
+        - id: appointmentmsmodule
+          uri: lb://APPOINTMENTMS
+          predicates:
+            - Path=/appointmentms/**
+          filters:
+            - RewritePath=/appointmentms/(?<path>.*), /$\{path}
         - id: vitalsignmsmodule
           uri: lb://VITALSIGNMS
           predicates:
@@ -68,12 +89,24 @@ spring:
             - Path=/authms/**
           filters:
             - RewritePath=/authms/(?<path>.*), /$\{path}
+        - id: inboxmsmodule
+          uri: lb://INBOXMS
+          predicates:
+            - Path=/inboxms/**
+          filters:
+            - RewritePath=/inboxms/(?<path>.*), /$\{path}
         - id: authurl
           uri: http://localhost:8083
           predicates:
             - Path=/authurl/**
           filters:
             - RewritePath=/authurl/(?<path>.*), /$\{path}
+        - id: inboxurl
+          uri: http://localhost:8086
+          predicates:
+            - Path=/inboxurl/**
+          filters:
+            - RewritePath=/inboxurl/(?<path>.*), /$\{path}
         - id: userurl
           uri: http://localhost:8081
           predicates:
@@ -85,8 +118,19 @@ spring:
           predicates:
             - Path=/vitalsignurl/**
           filters:
-            - RewritePath=/vitalsignurl/(?<path>.*), /$\{path}    
-            
+            - RewritePath=/vitalsignurl/(?<path>.*), /$\{path}  
+        - id: patienturl
+          uri: http://localhost:8084
+          predicates:
+            - Path=/patienturl/**
+          filters:
+            - RewritePath=/patienturl/(?<path>.*), /$\{path}      
+        - id: appointmenturl
+          uri: http://localhost:8085
+          predicates:
+            - Path=/appointmenturl/**
+          filters:
+            - RewritePath=/appointmenturl/(?<path>.*), /$\{path}
             
             
 
@@ -100,3 +144,6 @@ logging:
     com.netflix: WARN
     org.springframework.web: DEBUG
     com.edu: DEBUG
+    
+
+    
