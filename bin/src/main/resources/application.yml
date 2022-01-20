@@ -62,12 +62,6 @@ spring:
             - Path=/vitalsignms/**
           filters:
             - RewritePath=/vitalsignms/(?<path>.*), /$\{path}
-        - id: appointmentmsmodule
-          uri: lb://APPOINTMENTMS
-          predicates:
-            - Path=/appointmentms/**
-          filters:
-            - RewritePath=/appointmentms/(?<path>.*), /$\{path}   
         - id: authmsmodule
           uri: lb://AUTHMS
           predicates:
@@ -80,12 +74,6 @@ spring:
             - Path=/authurl/**
           filters:
             - RewritePath=/authurl/(?<path>.*), /$\{path}
-        - id: appointmenturl
-          uri: http://localhost:8085
-          predicates:
-            - Path=/appointmenturl/**
-          filters:
-            - RewritePath=/appointmenturl/(?<path>.*), /$\{path}    
         - id: userurl
           uri: http://localhost:8081
           predicates:
