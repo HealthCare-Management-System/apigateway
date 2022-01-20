@@ -95,6 +95,18 @@ spring:
             - Path=/inboxms/**
           filters:
             - RewritePath=/inboxms/(?<path>.*), /$\{path}
+        - id: patientvisitmsmodule
+          uri: lb://PATIENTVISITMS
+          predicates:
+            - Path=/patientvisitms/**
+          filters:
+            - RewritePath=/patientvisitms/(?<path>.*), /$\{path}
+        - id: patientvisiturl
+          uri: http://localhost:8087
+          predicates:
+            - Path=/patientvisiturl/**
+          filters:
+            - RewritePath=/patientvisiturl/(?<path>.*), /$\{path}
         - id: authurl
           uri: http://localhost:8083
           predicates:
